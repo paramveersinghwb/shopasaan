@@ -12,6 +12,7 @@ import {
 } from "react-native-responsive-screen";
 import colors from "../../style/colors";
 import { Icon } from "native-base";
+import { TextInput } from "react-native-gesture-handler";
 
 export default class Header extends Component {
   constructor(props) {
@@ -55,6 +56,7 @@ export default class Header extends Component {
             <Icon type="Ionicons" name="md-search" style={headerIcon} />
           </TouchableOpacity>
         </View>
+      
       </SafeAreaView>
     );
   }
@@ -76,5 +78,6 @@ const styles = StyleSheet.create({
   },
   menuButton: {
     width: wp("10%")
-  }
+  },
+ 
 });
