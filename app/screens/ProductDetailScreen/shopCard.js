@@ -24,7 +24,7 @@ export default class ShopCard extends Component {
       shop_title,
       country_pic,
       category
-    } = data.item;
+    } = data;
     const {
       container,
       logoImageContainer,

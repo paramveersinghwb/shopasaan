@@ -52,6 +52,7 @@ doRefresh() {
 }
   render() {
     const { container, header, shopsData } = this.props;
+    debugger
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: "#fafafa" }}>
         <View style={container}>
@@ -68,8 +69,9 @@ doRefresh() {
          ref={ (ref) => this.componentRef.FlatList = ref}
             keyExtractor={item => `key-${item.entity_id}`}
             data={[...shopsData]}
-            renderItem={data => <ShopCard data={data} />}
-            onMomentumScrollBegin = {()=>this.onscollView()}
+            renderItem={(data,index) => <TouchableOpacity onPress = {()=> this.props.navigation.navigate('ProuductDetails',{shopsData:data,value:index})}>
+              <ShopCard data={data} />
+              </TouchableOpacity>}
             ref={(ref) => { this._listRef = ref; }}
             refreshControl={
               <RefreshControl

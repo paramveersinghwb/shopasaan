@@ -12,7 +12,9 @@ import { Drawer } from "../screens/Drawer/Drawer";
 import { widthPercentageToDP } from "react-native-responsive-screen";
 import { Icon } from "native-base";
 import Header from "../screens/HomeScreen/Header";
-
+import ProuductDetails from '../screens/ProductDetailScreen/ProductDetails'
+import cartDetails from '../screens/cardDetails/cardDetails'
+import DeliverDetails from '../screens/DeliveryDetails/DeliveryDetails'
 const HomeStackNavigation = createDrawerNavigator(
   {
     Account: {
@@ -25,7 +27,10 @@ const HomeStackNavigation = createDrawerNavigator(
   }
 );
 const HomeStack = createStackNavigator({
-  HomeStack: { screen: HomeStackNavigation }
+  HomeStack: { screen: HomeStackNavigation },
+  ProuductDetails: {screen: ProuductDetails},
+  cartDetails: {screen: cartDetails},
+  deliveryDetails:{screen: DeliverDetails}
 });
 
 HomeStackNavigation.navigationOptions = navigation => {
