@@ -1,142 +1,268 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { SafeAreaView } from "react-navigation";
-import colors from "../../style/colors";
-import CommonStyle from "../../style/common";
 import {
-  widthPercentageToDP as wp,
-  heightPercentageToDP as hp
+    ActivityIndicator,
+    StyleSheet,
+    AsyncStorage,
+    View,
+    Text,
+    FlatList,
+    TouchableOpacity,
+    SafeAreaView,
+    Platform,
+    ScrollView,
+    TextInput,
+    Image
+} from "react-native";
+import {
+    widthPercentageToDP as wp,
+    heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import { connect } from "react-redux";
+import { Icon } from "native-base";
 import { RoundCornerTextInput } from "../../components/TextInputs";
 import { RoundCornerConfirmButtom } from "../../components/ConfirmButtons";
-// import firebase from "react-native-firebase";
-import { otpTextfieldsChangeAction } from "../../actions";
-import { connect } from "react-redux";
+import { signUp } from '../../config/fetchApi'
+import { validateEmailId } from '../../helper/Validations';
+import { Bubbles, DoubleBounce, Bars, Pulse } from 'react-native-loader';
+import { bindActionCreators } from "redux";
+import { SignIn, ClearAction} from "../../actions/authActions";
+import colors from "../../style/colors";
 
-class SignUpScreen extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+class SignUP extends React.Component {
+    static navigationOptions = { header: null };
+    constructor(props) {
+        super(props);
 
-  componentWillMount() {
-    /**
-     * !Just for testing purpose.
-     */
-  }
+        this.state = {
+            isSearch: false,
+            refreshing: false,
+            name: '',
+            email:'',
+            password:'',
+            confirmPassword: '',
+            phone:'',
+            isLoading:false
+        }
+        this.onSignup = this.onSignup.bind(this);
 
-  onContinue = () => {
-    const { email, password } = this.props;
-    this.props.navigation.navigate("HomeStack");
-  };
+    }
+    onLoginPress(){
+      this.props.navigation.navigate('LoginScreen')
+    }
+    onSignup = () => 
+    {
 
-  onBack = () => this.props.navigation.goBack();
-  validateEmail(email) {
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  }
+     if (this.state.name == null || this.state.name.trim().length == 0) {
+            alert("Enter First name")
+        }
+        else if (this.state.email == null || this.state.email.trim().length == 0) {
+            alert("Enter email")
+        }
+        else if (!validateEmailId(this.state.email)) {
+            alert("Email is not valid")
+        }
+        else if (this.state.phone == null || this.state.phone.trim().length == 0) {
+            alert("Enter Mobile number")
+        }
+        else if (this.state.phone.length < 5 || this.state.phone.length > 15) {
+            alert("Phone number is not valid")
+        }
+        else if (this.state.password.length != this.state.password.trim().length) {
+            alert("Space is not allowed")
+        }
+        else if (this.state.password.trim().length == 0) {
+            alert("Enter Password")
+        }
+        else if (this.state.password.length < 6) {
+            alert("Password length should be greater then 6")
+        }
+        else if (this.state.confirmPassword.length != this.state.confirmPassword.trim().length) {
+            alert("Space is not allowed")
+        }
+        else if (this.state.confirmPassword.trim().length == 0) {
+            alert("Enter confrim password")
+        }
+        else if (this.state.password != this.state.confirmPassword) {
+            alert("Password not matched")
+        }
+        else {
+                this.setState({ isLoading: true })
+                this._hitSignUpApi();
+        }
+    }
 
-  render() {
-    const {
-      safeAreaViewContainer,
-      container,
-      logoContainer,
-      headingText,
-      enterOtpHeadingText
-    } = styles;
-    const { otp, otpTextfieldsChangeAction } = this.props;
-    const signUpButtonDisable = otp.length >= 1;
+    _hitSignUpApi = async () => {
+        await signUp(this.state.name, this.state.email, this.state.phone, this.state.password, response => this.signUpApiResponse(response))
+    }
 
-    return (
-      <SafeAreaView style={safeAreaViewContainer}>
-        <View style={container}>
-          <View style={logoContainer}>
-            <Text
-              style={{
-                fontSize: wp("6%"),
-                color: colors.textInputText,
-                fontWeight: "500"
-              }}
-            >
-              Verify your phone number
-            </Text>
-          </View>
-          <Text style={enterOtpHeadingText}>Enter OTP sent to your number</Text>
-          <RoundCornerTextInput
-            placeholder="XXXXX"
-            propStyle={{ marginTop: wp("7%") }}
-            onChangeText={value =>
-              otpTextfieldsChangeAction({ key: "otp", value })
+    signUpApiResponse = (response) => {
+        this.setState({ isLoading: false })
+        if (response != null) {
+            debugger
+            if (response.status == 200) {
+                AsyncStorage.setItem("userData", JSON.stringify(response.data));
+
+              setTimeout(() => {
+                this.props.navigation.pop();
+                this.props.navigation.navigate("HomeScreen");
+
+                   alert('Acccount sucessfully created, login now')
+                }, 600);
             }
-            value={otp}
-            props={{ maxLength: 6 }}
-          />
-          <Text
-            style={[
-              enterOtpHeadingText,
-              { marginTop: wp("7%"), fontSize: wp("3.5%") }
-            ]}
-          >
-            Didn't receive OTP?{" "}
-            <Text style={{ color: colors.primaryColor }}>SEND AGAIN</Text>
-          </Text>
+            else {
+                setTimeout(() => {
+                    alert(response.data.message)
+                }, 600);
+            }
+        }
+        else
+            alert('Network error, Please try again later')
+    }
+  
 
+  
+ 
+    render() {
+        return (
+            <SafeAreaView style={{ flex: 1 }}>
+            <ScrollView style = {{flex:1}}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20,marginBottom: 20, }}>
+                        <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
+                            <Image source={require('../../images/back.png')} style={{ heigh: 24, width: 24, marginLeft: 20 }}></Image>
+                        </TouchableOpacity>
+                        <Text style={{ textAlign: 'center', flex: 1, marginRight: 20, fontSize: 24,fontWeight: '600', }}>Sign up</Text>
+                    </View>
+                    <View style = {{flex:1,marginHorizontal:20}}>
+                    <View style={[styles.containerRoundCorner]}>
+
+                    <TextInput
+      style={styles.containerRoundCornerTextInput}
+      placeholder= 'name'
+      placeholderTextColor={colors.textInputPlaceholder}
+      onChangeText={name =>this.setState({name:name})}
+      value={this.state.name}
+    />
+    </View>
+    <View style={[styles.containerRoundCorner]}>
+
+<TextInput
+style={styles.containerRoundCornerTextInput}
+placeholder= 'email'
+placeholderTextColor={colors.textInputPlaceholder}
+onChangeText={email =>this.setState({email:email})}
+value={this.state.email}
+/>
+</View>
+
+<View style={[styles.containerRoundCorner]}>
+
+<TextInput
+style={styles.containerRoundCornerTextInput}
+placeholder= 'Mobile'
+placeholderTextColor={colors.textInputPlaceholder}
+onChangeText={phone =>this.setState({phone:phone})}
+value={this.state.phone}
+/>
+</View>
+<View style={[styles.containerRoundCorner]}>
+
+<TextInput
+style={styles.containerRoundCornerTextInput}
+placeholder= 'Password'
+placeholderTextColor={colors.textInputPlaceholder}
+onChangeText={password =>this.setState({password:password})}
+value={this.state.password}
+secureTextEntry={true}
+/>
+</View>
+<View style={[styles.containerRoundCorner]}>
+
+<TextInput
+style={styles.containerRoundCornerTextInput}
+placeholder="Re-Password"
+placeholderTextColor={colors.textInputPlaceholder}
+onChangeText={confirmPassword =>this.setState({confirmPassword:confirmPassword})}
+value={this.state.confirmPassword}
+secureTextEntry={true}
+/>
+</View>
+          <View style = {{flexDirection:'row',justifyContent:'center'}}>
           <RoundCornerConfirmButtom
-            disabled={!signUpButtonDisable}
-            text="Verify & Continue"
-            containerStyle={{ marginTop: wp("15%") }}
-            onPressHandler={this.onContinue}
+            text="Sign up"
+            containerStyle={{ marginTop: wp("10%") }}
+            onPressHandler={this.onSignup}
           />
-          <RoundCornerConfirmButtom
-            disabled={false}
-            text="Go Back"
-            containerStyle={{ marginTop: wp("7%") }}
-            onPressHandler={this.onBack}
-          />
-        </View>
-      </SafeAreaView>
-    );
-  }
+         
+          </View>
+          </View>
+          <View style = {styles.bottomView}>
+            <Text style = {{fontSize:16,fontWeight:'600',marginBottom:5}}>Already have account?</Text>
+            <TouchableOpacity onPress = {()=>this.onLoginPress()}>
+            <Text style = {{color:'#FF6E40',fontSize:14,fontWeight:'600',}}>Login</Text>
+            </TouchableOpacity>
+      
+  </View>
+  {this.state.isLoading &&
+    <View style={styles.loading}>
+  <Bars size={10} color="red" />
+    </View>
 }
-const mapStateToProps = state => {
-  const { otp } = state.SignUpReducer;
-
-  return {
-    otp
-  };
+  </ScrollView>
+ 
+            </SafeAreaView>
+        );
+    }
 };
-
-const mapDispatchToProps = dispatch => ({
-  otpTextfieldsChangeAction: text => dispatch(otpTextfieldsChangeAction(text))
-});
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SignUpScreen);
+const mapStateToProps = state => {
+    return {
+        status: state.auth.status,
+        err_Message: state.auth.err_Message,
+        loader: state.auth.loader
+    }
+  }
+  const mapDispatchToProps = dispatch => {
+    return {
+        action: bindActionCreators({   }, dispatch)
+    }
+  }
+  export default connect(mapStateToProps, mapDispatchToProps)(SignUP);
+  
 
 const styles = StyleSheet.create({
-  safeAreaViewContainer: {
-    flex: 1
-  },
-  container: {
-    flex: 1,
-    // backgroundColor: colors.mainbackground,
-    alignItems: "center",
-    flexDirection: "column",
-    paddingLeft: wp("8%"),
-    paddingRight: wp("8%"),
-    marginTop: wp("20%")
-  },
-  logoContainer: { marginBottom: wp("20%") },
-  headingText: {
-    color: colors.loginHeadingText,
-    fontSize: wp("4.5%"),
-    marginBottom: wp("5%")
-  },
-  enterOtpHeadingText: {
-    color: colors.loginHeadingText,
-    fontSize: wp("4%"),
-    fontWeight: "600"
-  }
+    container: {
+        flex: 1,
+        alignItems: "center",
+        flexDirection: "column",
+        justifyContent: "center",
+        paddingLeft: wp("8%"),
+        paddingRight: wp("8%")
+    },
+  
+    bottomView:{
+      marginTop:wp('10'),
+      width: '100%', 
+      height: 60, 
+      alignItems: 'center',
+    },
+    loading: {
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: 0,
+        bottom: 0,
+        alignItems: 'center',
+        justifyContent: 'center'
+      },
+      containerRoundCorner: {
+        width: "100%",
+        height: wp("12%"),
+        backgroundColor: colors.textInput,
+        paddingLeft: wp("4%"),
+        borderRadius: 6,
+        marginTop: wp("7%")
+      },
+      containerRoundCornerTextInput: {
+        flex: 1,
+        color: colors.textInputText
+      }
 });

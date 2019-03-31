@@ -5,8 +5,7 @@ import HomeStack from "./routes/HomeStack";
 import LoginStack from "./routes/LoginStack";
 import AuthScreen from "./screens/AuthScreen/AuthScreen";
 import SignUpScreen from "./screens/SignUpScreen/SignUpScreen";
-import configureStore from "./store";
-const store = configureStore();
+import store from "./store";
 
 const RootStack = createSwitchNavigator(
   {

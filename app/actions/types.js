@@ -1,2 +1,35 @@
 export const LOGIN_TEXTFIELDS_CHANGE_ACTION = "login_textfields_change_action";
 export const OTP_TEXTFIELDS_CHANGE_ACTION = "signup_textfields_change_action";
+export const USER_DATA = 'USER_DATA';
+export const CLEAR_REDUX_VALUES = 'CLEAR_REDUX_VALUES';
+export const TOKEN = "token";
+export const LOGIN = "login";
+export const SIGNUP = "signup";
+export const OTP = "otp";
+
+// auth action types.....
+export const CLEAR_STATE = "CLEAR_STATE";
+export const ERR_MESSAGE = "ERR_MESSAGE";
+export const BOOKING_ERR_MESSAGE = "BOOKING_ERR_MESSAGE";
+export const LOGIN_SUCCESS = "LOGIN_SUCCESS";
+export const LOGIN_TOKEN = "LOGIN_TOKEN";
+export const LOGIN_FAILURE = "LOGIN_FAILURE";
+export const SIGNUP_SUCCESS = "SIGNUP_SUCCESS";
+export const SIGNUP_FAILURE = "SIGNUP_FAILURE";
+export const FORGOT_PASS_SUCCESS = "FORGOT_PASS_SUCCESS";
+export const FORGOT_PASS_FAILURE = "FORGOT_PASS_FAILURE";
+export const VERIFY_ACCOUNT_SUCCESS = "VERIFY_ACCOUNT_SUCCESS";
+export const VERIFY_ACCOUNT_FAILURE = "VERIFY_ACCOUNT_FAILURE";
+export const RESET_PASS_SUCCESS = "RESET_PASS_SUCCESS";
+export const RESET_PASS_FAILURE = "RESET_PASS_FAILURE";
+export const LOADER = "LOADER";
+export const BOOK_SERVICE_SUCCESS = "BOOK_SERVICE_SUCCESS";
+export const LOGIN_SUCCESS_OTP = "LOGIN_SUCCESS_OTP";
+export const PROFILE_ERR_MESSAGE = "PROFILE_ERR_MESSAGE";
+export const EDIT_PROFILE_SUCCESS = "EDIT_PROFILE_SUCCESS";
+export const EDIT_PROFILE_FAILURE = "EDIT_PROFILE_FAILURE";
+export const FETCH_CHATS = 'FETCH_CHATS';
+export const FETCH_CHAT = 'FETCH_CHAT';
+export const FETCH_SELLER_LIST = 'FETCH_SELLER_LIST';
+export const FETCH_FAILURE = 'FETCH_SELLER_LIST';
+export const FETCH_PRODUCT_LIST = 'FETCH_PRODUCT_LIST';

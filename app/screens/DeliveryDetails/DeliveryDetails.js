@@ -51,7 +51,7 @@ class DeliveryDetails extends React.Component {
                     <TouchableOpacity onPress = {()=>this.props.navigation.goBack()}> 
         <Image source = {require('../../images/back.png')} style = {{heigh:24,width:24,marginLeft:20}}></Image>
         </TouchableOpacity>  
-              <Text style = {{textAlign:'center',flex:1,marginRight:20}}> Delivery Details </Text>
+        <Text style={{ textAlign: 'center', flex: 1, marginRight: 20, fontSize: 24,fontWeight: '600', }}>Delivery Details</Text>
       </View>  
 <View style = {{height:1,backgroundColor:'black',marginTop:15,opacity:0.4}}/>
                     <View style={{ marginTop: 20, marginHorizontal: 15 }}>
@@ -126,7 +126,7 @@ class DeliveryDetails extends React.Component {
 
                     <View style={styles.bottomView} >
                         <View>
-                            <Text style={{ marginLeft: 15 }}>payment Method</Text>
+                            <Text style={{ marginLeft: 15 }}>Payment Method</Text>
                             <View style={{ flexDirection: 'row' }}>
                                 <Text style={{ marginLeft: 15, fontSize: 12 }}>cash on delivery</Text>
 
@@ -134,7 +134,7 @@ class DeliveryDetails extends React.Component {
 
                         </View>
                         <TouchableOpacity style = {{margin:10,borderWidth:1,backgroundColor:'blue',borderRadius:8,height: 40,justifyContent:'center' 
-}} onPress = {()=> this.props.navigation.navigate('deliveryDetails')}>
+}} onPress = {()=> this.props.navigation.navigate('confirmOrder')}>
                 <Text style = {{textAlign:'center',fontSize:16,fontWeight:'800',color:'white',margin:5}}>Place order</Text>
              </TouchableOpacity>
 
@@ -146,19 +146,8 @@ class DeliveryDetails extends React.Component {
     }
 }
 
-const mapStateToProps = state => {
-    const { shopsData } = state.HomeReducer;
 
-    return {
-        shopsData
-    };
-};
-
-const mapDispatchToProps = dispatch => ({
-    searchAction: text => console.log("hello")
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(DeliveryDetails);
+export default DeliveryDetails;
 
 const styles = StyleSheet.create({
     container: {
@@ -168,7 +157,7 @@ const styles = StyleSheet.create({
     },
     searchView: {
         borderRadius: 10,
-        backgroundColor: colors.primaryColor,
+        backgroundColor: colors.textInput,
         alignSelf: 'center',
         marginHorizontal: wp("10%"),
         width: wp('90%'),
@@ -189,6 +178,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'absolute',
         bottom: 0,
-        backgroundColor: colors.primaryColor,
+        backgroundColor: '#FFF3E0',
     },
 });

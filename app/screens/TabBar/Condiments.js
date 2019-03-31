@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, TouchableOpacity,StyleSheet,Platform,Image } from 'react-native';
 import NumericInput from 'react-native-numeric-input'
 
 
@@ -74,9 +74,49 @@ class Wallstab extends Component {
             </View>
             <View style = {{height:0.5,backgroundColor:'black',marginTop:20,opacity:0.5}}/>
           </View>
+          <View style={ styles.bottomView} >
+            <Text style = {{marginLeft:15}}>1 item(s) added</Text>
+            <TouchableOpacity onPress = {()=> this.props.route.sender.navigation.navigate('cartDetails')}>
+            <View style= {{flexDirection:'row',marginRight:15}}>
+                <Text>View card</Text>
+                <Image
+            source={require('../../images/arrow.png')}
+            resizeMode="cover"
+            style={{height:20,width:20}}
+          />
+            </View>
+            </TouchableOpacity>
+
+</View>
             </View>
         );
     }
 }
-
+const styles = StyleSheet.create(
+    {
+        MainContainer:
+        {
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'center',
+            paddingTop: ( Platform.OS === 'ios' ) ? 20 : 0
+        },
+     
+        bottomView:{
+     flexDirection:'row',
+          width: '100%', 
+          height: 60, 
+          backgroundColor: '#FFF3E0',
+          justifyContent: 'space-between', 
+          alignItems: 'center',
+          position: 'absolute',
+          bottom: 0
+        },
+     
+        textStyle:{
+     
+          color: '#fff',
+          fontSize:22
+        }
+    });
 export default Wallstab;

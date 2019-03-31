@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, Image, Platform } from "react-native";
+import { View, Text, StyleSheet, Image, Platform,TouchableOpacity } from "react-native";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
@@ -14,8 +14,7 @@ export default class ShopCard extends Component {
   }
 
   render() {
-    const { data } = this.props;
-    debugger
+    const { data,passProps } = this.props;
     const {
       entity_id,
       seller_id,
@@ -36,6 +35,10 @@ export default class ShopCard extends Component {
       detailsContainer
     } = styles;
     return (
+      <TouchableOpacity onPress = {()=> passProps.navigation.navigate('ProuductDetails',{
+        itemId: 86,
+        otherParam: 'anything you want here',
+      })}>
       <View style={container}>
         <View style={logoImageContainer}>
           <Image
@@ -53,6 +56,7 @@ export default class ShopCard extends Component {
           </View>
         </View>
       </View>
+      </TouchableOpacity>
     );
   }
 }

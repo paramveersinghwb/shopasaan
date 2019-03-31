@@ -1,7 +1,7 @@
 import { LOGIN_TEXTFIELDS_CHANGE_ACTION } from "../actions/types";
 
 const initialState = {
-  name: "",
+  password: "",
   phoneNumber: "",
   loader: false
 };

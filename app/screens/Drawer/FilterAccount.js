@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Slider } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Slider,AsyncStorage } from "react-native";
 import { Icon, Accordion } from "native-base";
 
 import {
@@ -17,6 +17,12 @@ export default class FilterAccount extends Component {
     super(props);
     this.state = { active: 1, pricerSlider: 0 };
   }
+
+  _logout = async() => {
+    AsyncStorage.clear();
+    this.props.navigation.navigate("LoginScreen")
+}
+
   _renderHeader(item, expanded) {
     const { filterAccHeader, filterAccHeaderIcon } = styles;
     return (
@@ -96,19 +102,19 @@ export default class FilterAccount extends Component {
     const { bodyContainer, accountButton, accountButtonText } = styles;
     return (
       <View style={bodyContainer}>
-        <TouchableOpacity style={accountButton}>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate("myAccount")} style={accountButton}>
           <Text style={accountButtonText}>Account</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={accountButton}>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate("myOrder")} style={accountButton}>
           <Text style={accountButtonText}>Orders</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={accountButton}>
+        <TouchableOpacity onPress={() => this.props.navigation.navigate("sellwithus")} style={accountButton}>
           <Text style={accountButtonText}>Sell with us</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={accountButton}
           onPress={() =>
-            console.log(this.props.navigation.navigate("LoginScreen"))
+            this._logout()
           }
         >
           <Text style={accountButtonText}>Logout</Text>

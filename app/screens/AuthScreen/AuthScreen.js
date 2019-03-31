@@ -9,13 +9,37 @@ import {
 class AuthScreen extends React.Component {
   constructor(props) {
     super(props);
-    this.bootstrapAsync();
+  }
+  componentDidMount(){
+this.getKey()
+  }
+  async getKey() {
+    const { navigation } = this.props;
+    try {
+      const value = await AsyncStorage.getItem('userData');
+      this.setState({myKey: value});
+    debugger
+      if(value !== null){
+        navigation.navigate("HomeStack");
+
+      }
+      else{
+        navigation.navigate("LoginStack");
+
+      }
+
+      this.bootstrapAsync();
+
+    } catch (error) {
+      console.log("Error retrieving data" + error);
+      navigation.navigate("LoginStack");
+
+
+    }
   }
 
   bootstrapAsync = async () => {
-    const { navigation } = this.props;
 
-    navigation.navigate(true ? "HomeStack" : "LoginStack");
   };
 
   render() {

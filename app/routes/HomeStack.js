@@ -15,6 +15,11 @@ import Header from "../screens/HomeScreen/Header";
 import ProuductDetails from '../screens/ProductDetailScreen/ProductDetails'
 import cartDetails from '../screens/cardDetails/cardDetails'
 import DeliverDetails from '../screens/DeliveryDetails/DeliveryDetails'
+import Myorder from '../screens/MyOrder/MyOrder'
+import MyAccount from '../screens/MyAccount/myAccount'
+import SellWithUs from '../screens/SellWithus/sellWithUs'
+import ConfirmOrder from '../screens/ConfirmOrder/ConfirmOrder'
+
 const HomeStackNavigation = createDrawerNavigator(
   {
     Account: {
@@ -30,7 +35,13 @@ const HomeStack = createStackNavigator({
   HomeStack: { screen: HomeStackNavigation },
   ProuductDetails: {screen: ProuductDetails},
   cartDetails: {screen: cartDetails},
-  deliveryDetails:{screen: DeliverDetails}
+  deliveryDetails:{screen: DeliverDetails},
+  myOrder:{screen: Myorder},
+  myAccount:{screen: MyAccount},
+  sellwithus:{screen: SellWithUs},
+  confirmOrder:{screen: ConfirmOrder},
+
+
 });
 
 HomeStackNavigation.navigationOptions = navigation => {

@@ -41,7 +41,7 @@ class ProductDetails extends React.Component {
       <TouchableOpacity onPress = {()=>this.props.navigation.goBack()}> 
         <Image source = {require('../../images/back.png')} style = {{heigh:24,width:24,marginLeft:20}}></Image>
         </TouchableOpacity>
-        <Text style = {{textAlign:'center',flex:1,marginRight:20}}> Card Details </Text>
+        <Text style={{ textAlign: 'center', flex: 1, marginRight: 20, fontSize: 24,fontWeight: '600', }}>Card Detail</Text>
       </View>  
 <View style = {{height:1,backgroundColor:'black',marginTop:15,opacity:0.4}}/>
 <View style = {{marginTop:20,marginLeft:15}}>
@@ -164,19 +164,9 @@ class ProductDetails extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
-  const { shopsData } = state.HomeReducer;
 
-  return {
-    shopsData
-  };
-};
 
-const mapDispatchToProps = dispatch => ({
-  searchAction: text => console.log("hello")
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProductDetails);
+export default ProductDetails;
 
 const styles = StyleSheet.create({
   container: {

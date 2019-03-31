@@ -1,0 +1,10 @@
+export const EmailBlankMsg = 'Please enter email.';
+export const EmailErrMsg = 'Please enter valid email.';
+export const NameBlankMsg = 'Please enter name.';
+export const NameErrMsg = 'Please enter valid name.'
+export const PassBlankMsg = 'Please enter password.';
+export const ConfirmPassMsg = 'Please enter confirm password.';
+export const ConfirmPassMatchMsg = 'Password does not match.';
+export const AcceptenceMsg = 'Please accept Terms and Conditions.';
+export const PasswordLengthMsg = 'Please enter at least 8 charecter.';
+export const NetworkStatus = 'Net connection is not available.';
