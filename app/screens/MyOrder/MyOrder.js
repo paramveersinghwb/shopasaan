@@ -19,6 +19,8 @@ import {
 } from "react-native-responsive-screen";
 import { connect } from "react-redux";
 import { Icon } from "native-base";
+import { RoundCornerTextInput } from "../../components/TextInputs";
+import { RoundCornerConfirmButtom } from "../../components/ConfirmButtons";
 
 class HomeScreen extends React.Component {
     static navigationOptions = { header: null };
@@ -28,14 +30,26 @@ class HomeScreen extends React.Component {
         this.state = {
             isSearch: false,
             refreshing: false,
+            name: '',
+            isNumber: false
 
-            item: 0,
         }
     }
   
-    renderData() {
-        return(
-            <View style = {{backgroundColor:'#FFF3E0',marginTop:5,borderRadius:15}}>
+ 
+    render() {
+        const { container, header, shopsData } = this.props;
+        debugger
+        return (
+            <SafeAreaView style={{ flex: 1 }}>
+            <View style={{ flex: 1 }}>
+                <View style = {{flexDirection:'row',alignItems: 'center',marginTop:20}}>
+                <TouchableOpacity onPress = {()=>this.props.navigation.goBack()}> 
+    <Image source = {require('../../images/back.png')} style = {{heigh:24,width:24,marginLeft:20}}></Image>
+    </TouchableOpacity>  
+    <Text style={{ textAlign: 'center', flex: 1, marginRight: 20, fontSize: 24,fontWeight: '600', }}>My order</Text>
+  </View> 
+            <View style = {{backgroundColor:'#FFF3E0',marginTop:20,borderRadius:15}}>
                    <View style={{ marginTop: 20, marginLeft: 20 }}>
                         <Text style={{ fontSize: 16, fontWeight: '600' }}> Manhas ji Kariyan store</Text>
                         <Text style={{ fontSize: 14, fontWeight: '400', marginTop: 5 }}> Sco 12, scc XXX Chandigrah</Text>
@@ -60,40 +74,15 @@ class HomeScreen extends React.Component {
                     </View>
                         
        </View>
+       </View>
+       </SafeAreaView>
 
-        )
-    }
-    render() {
-        const { container, header, shopsData } = this.props;
-        debugger
-        return (
-            <SafeAreaView style={{ flex: 1 }}>
-                <View style={{ flex: 1 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', marginTop: 20,marginBottom: 20, }}>
-                        <TouchableOpacity onPress={() => this.props.navigation.goBack()}>
-                            <Image source={require('../../images/back.png')} style={{ heigh: 24, width: 24, marginLeft: 20 }}></Image>
-                        </TouchableOpacity>
-                        <Text style={{ textAlign: 'center', flex: 1, marginRight: 20, fontSize: 24,fontWeight: '600', }}>Order</Text>
-                    </View>
-                    <FlatList
-                        ref={(ref) => this.componentRef.FlatList = ref}
-                        keyExtractor={item => `key-${item.entity_id}`}
-                        data={[...shopsData]}
-                        renderItem={(data, index) => 
-                        this.renderData()
-                        }
-                        ref={(ref) => { this._listRef = ref; }}
-                      
-                    />
-                    
-                </View>
-            </SafeAreaView>
         );
     }
 };
 
 
-export default  HomeScreen
+export default HomeScreen;
 
 const styles = StyleSheet.create({
     container: {

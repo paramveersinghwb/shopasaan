@@ -46,8 +46,10 @@ export const SignIn = (data,token) => {
                                     dispatch({ type: LOGIN_TOKEN, payload: responseJson.data })
                                    setUserData (JSON.stringify(data))
                                 }
-                                else if (responseJson.data.status_code === 202) dispatch({ type: LOGIN_SUCCESS_OTP, payload: responseJson.data })
-                                else if (responseJson.data.status_code === 400) dispatch({ type: LOGIN_FAILURE, payload: responseJson.data.message })
+                                else if (responseJson.data.status == 202) dispatch({ type: LOGIN_SUCCESS_OTP, payload: responseJson.data })
+                                else if (responseJson.data.status == 401)  dispatch({ type: LOGIN_FAILURE, payload: responseJson.data.message })
+                                else if (responseJson.data.status == 1163)  dispatch({ type: LOGIN_FAILURE, payload: responseJson.data.respose })
+
                             })
                     }
                 })
@@ -115,30 +117,7 @@ export const ForgotPass = (data) => {
     }
 }
 
-// ResetPassword api functionality    
-export const SocialLogin = (data) => {
-    return dispatch => {
-        networkStatus()
-            .then(isConnected => {
-                if (!isConnected) dispatch({ type: ERR_MESSAGE, payload: NetworkStatus })
-                else {
-                    dispatch({ type: CLEAR_STATE })
-                    dispatch({ type: LOADER, payload: true })
-                    APIServices(data, 'oauth/token', 'POST')
-                        .then(responseJson => {
-                            setUserData (JSON.stringify(data))
-                            console.log("test===>", responseJson)
-                            if (responseJson.data.status_code === 200) {
-                                dispatch({ type: LOGIN_SUCCESS, payload: responseJson.data })
-                                dispatch({ type: LOGIN_TOKEN, payload: responseJson.data })
-                            }
-                            else if (responseJson.data.status_code === 401) dispatch({ type: LOGIN_FAILURE, payload: responseJson.data.message })
-                        })
-                }
-            })
 
-    }
-}
 
 export const ResetPass = (data) => {
     return dispatch => {
@@ -224,7 +203,7 @@ export const sellerList = (authorization) => {
 
 export const searchSeller = (authorization,serachData) => {
     return dispatch => {
-        let data= JSON.stringify(serachData)
+        let data= serachData
         networkStatus()
             .then(isConnected => {
                 if (!isConnected) dispatch({ type: ERR_MESSAGE, payload: NetworkStatus })
@@ -276,6 +255,63 @@ export const productList = (authorization,postData) => {
             })
     }
 }
+
+
+
+
+export const getOtp = (data,authorization) => {
+    return dispatch => {
+        debugger
+        console.log("resetPassword===>", data)
+         {
+            networkStatus()
+                .then(isConnected => {
+                    if (!isConnected) dispatch({ type: ERR_MESSAGE, payload: NetworkStatus })
+                    else {
+                        dispatch({ type: CLEAR_STATE })
+                        dispatch({ type: LOADER, payload: true })
+                        APIServices(JSON.stringify(data), 'forgotPassOtp', 'POST',authorization)
+                            .then(responseJson => {
+                                console.log("responseJson==>", JSON.stringify(responseJson))
+                                if (responseJson.data.status === 200) dispatch({ type: RESET_PASS_SUCCESS, payload: responseJson.data })
+                                else if (responseJson.data.status_code === 401) dispatch({ type: RESET_PASS_FAILURE, payload: responseJson.data.message ? responseJson.data.message : 'Something went wrong.' })
+                                else if (responseJson.status === 422) dispatch({ type: RESET_PASS_FAILURE, payload: responseJson.data.email ? responseJson.data.email[0] : 'Something went wrong.' })
+                                else if (responseJson.data.status === 1002) dispatch({ type: RESET_PASS_FAILURE, payload: responseJson.data.email ? responseJson.data.email[0] : 'Network Request Failed.' })
+                            })
+                    }
+                })
+        }
+    }
+}
+
+
+
+export const verifyOtp = (data) => {
+    return dispatch => {
+        console.log("resetPassword===>", data)
+        if (!validatePassword(data.password).status) dispatch({ type: ERR_MESSAGE, payload: validatePassword(data.password).message })
+        else if (!validatConfirmPass(data.password, data.password_confirmation).status) dispatch({ type: ERR_MESSAGE, payload: validatConfirmPass(data.password, data.confirmPass).message })
+        else {
+            networkStatus()
+                .then(isConnected => {
+                    if (!isConnected) dispatch({ type: ERR_MESSAGE, payload: NetworkStatus })
+                    else {
+                        dispatch({ type: CLEAR_STATE })
+                        dispatch({ type: LOADER, payload: true })
+                        APIServices(data, 'forgotPassOtp', 'POST')
+                            .then(responseJson => {
+                                console.log("responseJson==>", JSON.stringify(responseJson))
+                                if (responseJson.data.status === 200) dispatch({ type: RESET_PASS_SUCCESS, payload: responseJson.data })
+                                else if (responseJson.data.status_code === 401) dispatch({ type: RESET_PASS_FAILURE, payload: responseJson.data.message ? responseJson.data.message : 'Something went wrong.' })
+                                else if (responseJson.status === 422) dispatch({ type: RESET_PASS_FAILURE, payload: responseJson.data.email ? responseJson.data.email[0] : 'Something went wrong.' })
+                                else if (responseJson.data.status === 1002) dispatch({ type: RESET_PASS_FAILURE, payload: responseJson.data.email ? responseJson.data.email[0] : 'Network Request Failed.' })
+                            })
+                    }
+                })
+        }
+    }
+}
+
 
 
 

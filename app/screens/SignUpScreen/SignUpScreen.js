@@ -99,15 +99,17 @@ class SignUP extends React.Component {
         this.setState({ isLoading: false })
         if (response != null) {
             debugger
-            if (response.status == 200) {
+            if (response.data.status == 200) {
                 AsyncStorage.setItem("userData", JSON.stringify(response.data));
 
               setTimeout(() => {
-                this.props.navigation.pop();
                 this.props.navigation.navigate("HomeScreen");
 
                    alert('Acccount sucessfully created, login now')
                 }, 600);
+            }
+            else if(response.state == 201){
+                alert(response.message)
             }
             else {
                 setTimeout(() => {

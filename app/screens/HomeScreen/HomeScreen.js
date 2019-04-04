@@ -135,13 +135,11 @@ _renderItem = ({item}) => {
         {!this.state.isSearch ? <View style = {styles.searchView}>
        <View style = {{flexDirection:'row',flex:1}}>
        <Icon type="Ionicons" name="md-search" style={{color:'white',marginHorizontal:5,alignSelf:'center'}} />
-       <View style = {{alignItems:'center',flat:1}}>
        <TextInput
        style = {{alignSelf:'center',textAlign:'center',fontSize:14}}
        onChangeText={(text) => this.setState({searchText:text})}
         placeholder= 'search here' style = {{color:'white',fontSize:14}}>
        </TextInput>
-         </View>
       
        </View>
        <TouchableOpacity onPress = {()=>this.props.action.searchSeller(this.state.bareer_key,this.state.searchText)} style = {{alignSelf:'center', justifyContent: 'center',}}>

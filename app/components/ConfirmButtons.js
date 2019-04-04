@@ -39,7 +39,8 @@ const styles = StyleSheet.create({
     backgroundColor: colors.textInputText,
     borderRadius: 6,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
+    marginTop: wp("5%"),
   },
   textRoundCorner: {
     fontSize: wp("4.5%"),

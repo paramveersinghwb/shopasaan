@@ -51,7 +51,9 @@ import { bindActionCreators } from "redux";
         this.clearReducerState();
     }
     else if (nextProps.status === '400') {
-        this.setState({ ErrMsg: nextProps.err_Message })
+      alert(nextProps.err_Message)
+      this.clearReducerState();
+
     }
 }
 
@@ -102,7 +104,7 @@ TokenApiResponse = (response) => {
       }
       else {
           setTimeout(() => {
-              alert(response.data.response)
+              alert(response.data.message)
           }, 600);
       }
   }
@@ -119,7 +121,6 @@ _hitLoginApi = async (token) => {
 }
   this.props.action.SignIn(data,token)
 
-  // await login(this.state.phoneNumber, this.state.password,token, response => this.loginApiResponse(response,token))
 
 }
 
@@ -136,12 +137,12 @@ loginApiResponse = (response,token) => {
         AsyncStorage.setItem("userData", JSON.stringify(userDetails));
         setTimeout(() => {
           this.props.navigation.navigate("HomeStack");
-        }, 600);
+        }, 300);
       }
       else {
           setTimeout(() => {
-              alert(response.data.message)
-          }, 600);
+            alert('your user name and password are not correct')
+          }, 300);
       }
   }
   else
@@ -217,7 +218,7 @@ loginApiResponse = (response,token) => {
   </View>
   {this.state.isLoading &&
     <View style={styles.loading}>
-  <Bars size={10} color="red" />
+  <Bars size={16} color="red" />
     </View>
 }
 

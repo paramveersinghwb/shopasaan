@@ -46,15 +46,15 @@ export default class Header extends Component {
               color: "white",
               fontSize: wp("5%"),
               fontWeight: "bold",
-              letterSpacing: 1
+              letterSpacing: 1,
+              textAlign:'center',
+              flex: 1,
             }}
           >
             SHOPASAAN
           </Text>
 
-          <TouchableOpacity>
-            <Icon type="Ionicons" name="md-search" style={headerIcon} />
-          </TouchableOpacity>
+       
         </View>
       
       </SafeAreaView>
@@ -67,7 +67,6 @@ const styles = StyleSheet.create({
     height: wp("14%"),
     backgroundColor: colors.primaryColor,
     flexDirection: "row",
-    justifyContent: "space-between",
     alignItems: "center",
     paddingLeft: wp("5%"),
     paddingRight: wp("5%")
