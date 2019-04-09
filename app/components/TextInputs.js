@@ -18,7 +18,7 @@ export const RoundCornerTextInput = ({
       style={styles.containerRoundCornerTextInput}
       placeholder={placeholder}
       placeholderTextColor={colors.textInputPlaceholder}
-       onChangeText={text => text}
+      onChangeText={text => onChangeText(text)}
       value={value}
       {...props}
     />

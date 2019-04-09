@@ -5,6 +5,7 @@ const initialState = {
 };
 
 const SignUpReducer = (state = initialState, action) => {
+  // debugger;
   console.log(action);
   switch (action.type) {
     case OTP_TEXTFIELDS_CHANGE_ACTION:

@@ -1,20 +1,12 @@
-import { createStore, applyMiddleware, combineReducers } from 'redux';
-import thunk from 'redux-thunk';
+import { createStore, applyMiddleware, combineReducers } from "redux";
+import thunk from "redux-thunk";
 
 import authReducer from "../reducer/authReducer";
-
+import rootReducer from "../reducer";
 
 // const sagaMiddleware = createSagaMiddleware();
 
-const appReducer = combineReducers({
-    auth: authReducer,
+const middleware = [thunk]; // integrate thunk
 
-})
-
-const middleware = [thunk] // integrate thunk
-
-const store = createStore(
-    appReducer,
-    applyMiddleware(...middleware)
-);
+const store = createStore(rootReducer, applyMiddleware(...middleware));
 export default store;
